@@ -34,7 +34,7 @@ class ExempleJDBCTest {
     }
   }
 
-  @Disabled("Retire cette annotation pour activer le test")
+  // @Disabled("Retire cette annotation pour activer le test")
   @Test
   void chaque_ligne_a_le_format_code_tiret_nom() throws SQLException {
     try (Connection connexion = DriverManager.getConnection(ExempleJDBC.URL_MEMOIRE)) {
