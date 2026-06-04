@@ -5,6 +5,7 @@ import fr.univ_amu.iut.exercice4.Site;
 import fr.univ_amu.iut.jdbc.DataAccessException;
 import java.time.LocalDate;
 import java.util.Optional;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -41,14 +42,31 @@ public class SitesController {
   private void initialize() {
     // TODO exercice 7 : câbler la vue sur le ViewModel.
     //
-    // 1. Pour chaque colonne, définir une cell value factory qui lit le champ du Site
-    //    (numeroCarre, nomConvivial, protocole).
+    // 1. Pour chaque colonne, définir une cell value factory qui lit le champ du
+    // Site
+    // (numeroCarre, nomConvivial, protocole).
     // 2. Donner ses items à la TableView : setItems + viewModel.sitesProperty().
     // 3. Lier le texte de labelResume au resumeProperty() du ViewModel.
     // 4. Remplir choiceProtocole avec les deux protocoles ("PointFixeStandard",
-    //    "PointFixeRecherche").
+    // "PointFixeRecherche").
     // 5. Désactiver boutonSupprimer tant qu'aucune ligne n'est sélectionnée
-    //    (disableProperty lié à selectedItemProperty().isNull() du selection model).
+    // (disableProperty lié à selectedItemProperty().isNull() du selection model).
+    colNumero.setCellValueFactory(
+        cellData -> new SimpleStringProperty(cellData.getValue().numeroCarre()));
+    colNom.setCellValueFactory(
+        cellData -> new SimpleStringProperty(cellData.getValue().nomConvivial()));
+    colProtocole.setCellValueFactory(
+        cellData -> new SimpleStringProperty(cellData.getValue().protocole()));
+
+    tableSites.setItems(viewModel.sitesProperty());
+
+    labelResume.textProperty().bind(viewModel.resumeProperty());
+
+    choiceProtocole.getItems().addAll("PointFixeStandard", "PointFixeRecherche");
+
+    boutonSupprimer
+        .disableProperty()
+        .bind(tableSites.getSelectionModel().selectedItemProperty().isNull());
   }
 
   @FXML
